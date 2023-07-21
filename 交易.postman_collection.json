@@ -1,0 +1,516 @@
+{
+	"info": {
+		"_postman_id": "810cd884-b0f3-479a-8205-2e6f3dd8f638",
+		"name": "交易",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12400110"
+	},
+	"item": [
+		{
+			"name": "查询分库",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/transaction/core/testQueryByPayTransactionId?payTransactionId=101594033449601248",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transaction",
+						"core",
+						"testQueryByPayTransactionId"
+					],
+					"query": [
+						{
+							"key": "payTransactionId",
+							"value": "101594033449601248"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "交易收单",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest(\"http://mse-5ee33aa2-nacos-ans.mse.aliyuncs.com:8848/nacos/v1/ns/instance/list?serviceName=eastbuy-transaction-c-service&groupName=dev&namespaceId=dev\",(err,response)=>{",
+							"    let host = response.json().hosts[0]",
+							"    host = host.ip+\":\"+host.port",
+							"    pm.variables.set(\"eastbuy-transaction-c-servic\",host)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-eb-inner-request",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "eb-userinfo",
+						"value": "eyJpZCI6IjEiLCJuYW1lIjoiMSJ9",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\":\"220397813108796\",\n    \"settleId\":\"87154312061438123\",\n    \"payProductCode\":4,\n    \"totalFee\":2,\n    \"clientIp\":\"10.10.11.1\",\n    \"openId\":\"wxe8e7eae7eb38e093\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{eastbuy-transaction-c-servic}}/v1/transaction/order/payment/receive",
+					"host": [
+						"{{eastbuy-transaction-c-servic}}"
+					],
+					"path": [
+						"v1",
+						"transaction",
+						"order",
+						"payment",
+						"receive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "交易查询",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest(\"http://mse-5ee33aa2-nacos-ans.mse.aliyuncs.com:8848/nacos/v1/ns/instance/list?serviceName=eastbuy-transaction-c-service&groupName=dev&namespaceId=dev\",(err,response)=>{",
+							"    let host = response.json().hosts[0]",
+							"    host = host.ip+\":\"+host.port",
+							"    pm.variables.set(\"eastbuy-transaction-c-servic\",host)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-eb-inner-request",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "eb-userinfo",
+						"value": "eyJpZCI6IjEiLCJuYW1lIjoiMSJ9",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\":\"158113013239891\",\n    \"settleId\":\"85533272268940315\",\n    \"payProductCode\":4,\n    \"totalFee\":2,\n    \"clientIp\":\"10.10.11.1\",\n    \"openId\":\"wxe8e7eae7eb38e093\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/transaction/order/payment/receive",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"transaction",
+						"order",
+						"payment",
+						"receive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "交易退款",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest(\"http://mse-5ee33aa2-nacos-ans.mse.aliyuncs.com:8848/nacos/v1/ns/instance/list?serviceName=eastbuy-transaction-c-service&groupName=dev&namespaceId=dev\",(err,response)=>{",
+							"    let host = response.json().hosts[0]",
+							"    host = host.ip+\":\"+host.port",
+							"    pm.variables.set(\"eastbuy-transaction-c-servic\",host)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-eb-inner-request",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "eb-userinfo",
+						"value": "eyJpZCI6IjEiLCJuYW1lIjoiMSJ9",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\":\"220397813108796\",\n    \"settleId\":\"87154312061438123\",\n    \"payProductCode\":4,\n    \"totalFee\":2,\n    \"clientIp\":\"10.10.11.1\",\n    \"openId\":\"wxe8e7eae7eb38e093\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{eastbuy-transaction-c-servic}}/v1/transaction/order/payment/receive",
+					"host": [
+						"{{eastbuy-transaction-c-servic}}"
+					],
+					"path": [
+						"v1",
+						"transaction",
+						"order",
+						"payment",
+						"receive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "交易退款查询",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest(\"http://mse-5ee33aa2-nacos-ans.mse.aliyuncs.com:8848/nacos/v1/ns/instance/list?serviceName=eastbuy-transaction-c-service&groupName=dev&namespaceId=dev\",(err,response)=>{",
+							"    let host = response.json().hosts[0]",
+							"    host = host.ip+\":\"+host.port",
+							"    pm.variables.set(\"eastbuy-transaction-c-servic\",host)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-eb-inner-request",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "eb-userinfo",
+						"value": "eyJpZCI6IjEiLCJuYW1lIjoiMSJ9",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\":\"220397813108796\",\n    \"afterSaleId\":\"3344581732639351\",\n    \"merchantRefundNo\":\"3344581768684441\",\n    \"payOrderNo\":\"ORD202304241209415415229891\",\n    \"merchantOrderNo\":\"85533272268940315\",\n    \"clientIp\":\"10.10.11.1\",\n    \"openId\":\"wxe8e7eae7eb38e093\",\n    \"refundDesc\":\"sss\",\n    \"refundSource\":1,\n    \"refundFee\":3600\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/transaction/refund/receive",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"transaction",
+						"refund",
+						"receive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "交易关单",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest(\"http://mse-5ee33aa2-nacos-ans.mse.aliyuncs.com:8848/nacos/v1/ns/instance/list?serviceName=eastbuy-transaction-c-service&groupName=dev&namespaceId=dev\",(err,response)=>{",
+							"    let host = response.json().hosts[0]",
+							"    host = host.ip+\":\"+host.port",
+							"    pm.variables.set(\"eastbuy-transaction-c-servic\",host)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-eb-inner-request",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "eb-userinfo",
+						"value": "eyJpZCI6IjEiLCJuYW1lIjoiMSJ9",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"settleId\": \"100004644932077605\",\n    \"userId\": \"1638374340100956161\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/transaction/order/payment/query",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"transaction",
+						"order",
+						"payment",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "交易计费测试",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/transaction/core/testChargeOrder?orderId=87154336002536619&settleId=87154312061438123",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transaction",
+						"core",
+						"testChargeOrder"
+					],
+					"query": [
+						{
+							"key": "orderId",
+							"value": "87154336002536619"
+						},
+						{
+							"key": "settleId",
+							"value": "87154312061438123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "交易初始化订单测试",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-eb-inner-request",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "eb-userinfo",
+						"value": "eyJpZCI6IjEiLCJuYW1lIjoiMSJ9",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "172.28.145.203:8080/transaction/core/testInitOrder?orderId=101993309561467104",
+					"host": [
+						"172",
+						"28",
+						"145",
+						"203"
+					],
+					"port": "8080",
+					"path": [
+						"transaction",
+						"core",
+						"testInitOrder"
+					],
+					"query": [
+						{
+							"key": "orderId",
+							"value": "101993309561467104"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "测试退款收单",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/transaction/core/testRefundReceive?afterSaleId=3915991224197674&settleId=100248532821249248&orderId=100248563775199456",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transaction",
+						"core",
+						"testRefundReceive"
+					],
+					"query": [
+						{
+							"key": "afterSaleId",
+							"value": "3915991224197674"
+						},
+						{
+							"key": "settleId",
+							"value": "100248532821249248"
+						},
+						{
+							"key": "orderId",
+							"value": "100248563775199456"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "交易查询订单",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/transaction/query/getOrderById?transactionId=106181908925335618",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"transaction",
+						"query",
+						"getOrderById"
+					],
+					"query": [
+						{
+							"key": "transactionId",
+							"value": "106181908925335618"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "交易查询退款",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/transaction/query/getOrderById?transactionId=106181908925335618",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"transaction",
+						"query",
+						"getOrderById"
+					],
+					"query": [
+						{
+							"key": "transactionId",
+							"value": "106181908925335618"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"let env = pm.environment.get(\"env\")",
+					"let serviceName = pm.collectionVariables.get(\"serviceName\");",
+					"let nacos = pm.globals.get(\"nacos\");",
+					"if(env == 'local'){",
+					"    pm.variables.set(\"host\",\"localhost:8080\")",
+					"}else{",
+					"    pm.sendRequest(`${nacos}?serviceName=${serviceName}&groupName=${env}&namespaceId=${env}`,(err,response)=>{",
+					"    let host = response.json().hosts[0]",
+					"    host = host.ip+\":\"+host.port",
+					"    pm.variables.set(\"host\",host)",
+					"    })",
+					"}",
+					"",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "serviceName",
+			"value": "eastbuy-transaction-c-service",
+			"type": "string"
+		}
+	]
+}
